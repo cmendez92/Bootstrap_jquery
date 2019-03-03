@@ -1,4 +1,7 @@
 # Bootstrap_jquery
+Autor: Carlos Méndez Fernández
+E-mail: c.mendez@tobeit.es
+
 
 Implement a simple website with Bootstrap and JQuery that:
 
