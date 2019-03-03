@@ -19,11 +19,11 @@
   <p>Type the Github Username in the box and press Search button.</p>
   <form>
     <div class="form-group">
-      <label for="usr">Github Username:</label>
-      <input type="text" class="form-control" id="usr">
+      <label for="txtusr">Github Username:</label>
+      <input id="txtusr" type="text" class="form-control">
     </div>
   </form>
-  <button type="button" class="btn btn-info">Search</button>
+  <button id="btnsearch" type="button" class="btn btn-info">Search</button>
 </div>
 
 <div class="container">
@@ -32,7 +32,7 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Number od contributors</th>
+        <th>ID</th>
         <th>Description</th>
       </tr>
     </thead>
@@ -44,46 +44,27 @@
 </body>
 </html>
 
-<script>
-$(document).ready(function(){
-  $("p").click(function(){
-    $(this).hide();
-  });
-});
-</script>
+
 
 <script>
 $(document).ready(function(){
-  $("button").click(function(){
-    $.get("https://api.github.com/users/cmendez92", function(data, status){
-      alert("Data: " + data.login + "\nStatus: " + status);
+  $('#btnsearch').click(function() {
+    <!--alert($('#txtusr').val());-->
+    var usr = $('#txtusr').val();
+    $.ajax({
+        type: 'GET',
+        url: 'https://api.github.com/users/'+usr+'/repos',
+        data: { get_param: 'value' },
+        dataType: 'json',
+        success: function (data) {
+            $.each(data, function(index, element) {
+                $("table").find('tbody')
+                .append($('<tr>')
+                  .append($('<td>', {text: element.name}),$('<td>', {text: element.id}),$('<td>', {text: element.description}))
+             );
+           });
+        }
     });
   });
-});
-</script>
-
-<script>
-$.ajax({
-    dataType: "json",
-    url: https://api.github.com/users/eetac/repos,
-    data: data2,
-    success: success
-});
-</script>
-
-<script>
-$.ajax({
-    type: 'GET',
-    url: 'https://api.github.com/users/eetac/repos',
-    data: { get_param: 'value' },
-    dataType: 'json',
-    success: function (data) {
-        $.each(data, function(index, element) {
-            $("table").find('tbody')
-            .append($('<tr>')
-              .append($('<td>', {text: element.name}),$('<td>', {text: element.id}),$('<td>', {text: element.description}))
-         );
-        });
-    }
 });
 </script>
